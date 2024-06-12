@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 # import pandas as pd
 
 import requests
-
+start_time = time.time()
 
 url =   "https://josaa.admissions.nic.in/applicant/seatmatrix/openingclosingrankarchieve.aspx"
 
@@ -134,7 +134,6 @@ Parsing(url=url)
 
 
 
-# response = requests.get(url)
+endtime = time.time()
 
-# soup = bs(response.text,'html.parser')
-# print(soup)
+print("Runtime for the scrapper script ",endtime-start_time)
