@@ -1,12 +1,8 @@
 from selenium import webdriver
 import csv
 import time
-from bs4 import BeautifulSoup as bs
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.relative_locator import locate_with
-# import pandas as pd
-# from selenium.webdriver.remote.webelement import WebElement
-import requests
+
 start_time = time.time()
 print("Started ...... ")
 url =   "https://josaa.admissions.nic.in/applicant/seatmatrix/openingclosingrankarchieve.aspx"
@@ -28,20 +24,18 @@ driver = webdriver.Chrome()
 def Parsing(url):
     driver.get(url=url)
     years = elementFind('//a[@class="chosen-single"]','//li[@class="active-result"]')
-    # driver.quit()
+
     time.sleep(0.5)
-    
-    # print(range(len(years)),range(len(rounds)))
+
     p=0
     for i in range(len(years)):
-        # rounds =driver.find_element(locate_with(By.XPATH,locator1).to_right_of(By.XPATH,'(//div[@class="row mb-3"])[2]//label')).click()
         
         rounds= [6,6,6,6,7,7,7,6]
         
         
         for j in range(rounds[p]):
          
-            # print(f"Status Code {}")
+            
             
             
             year = clickElement('//a[@class="chosen-single"]','//li[@class="active-result"]',i)
@@ -61,12 +55,12 @@ def Parsing(url):
     
         p+=1
    
-            # driver.set_res
+          
 
 
  
 def dataScraper(year:str,rnd:int):
-    # print("scappring")
+
     
     
     table = driver.find_elements(By.TAG_NAME,'tr')
@@ -79,7 +73,7 @@ def dataScraper(year:str,rnd:int):
    
             text =elem.find_elements(By.TAG_NAME,'td')
             data_list = [data.text for data in text ]
-            # print(data_list)
+          
             
             data_list.append(year)
             data_list.append(rnd)
@@ -91,10 +85,7 @@ def dataScraper(year:str,rnd:int):
 
 def clickElement(Locator:str,Locator2:str,index:int):
     temp = driver.find_elements(By.XPATH,Locator)
-    # print(temp.text,temp.tag_name)
-    
-    
-    # time.sleep(1.4)
+
     for item in temp:
         if item.text=='--Select--':   
             item.click()
@@ -116,12 +107,10 @@ def clickElement(Locator:str,Locator2:str,index:int):
 
 def elementFind(locator:str,Locator2:str):
     temp =driver.find_element(By.XPATH,locator)
-    # print(temp.text)
+
     if temp.text == '--Select--':
         temp.click()
-    # for x in temp:
-    #     if x.text =='--Select--' :
-    #         x.click()
+  
     try:
         dropdown = driver.find_elements(By.XPATH,Locator2)
          
