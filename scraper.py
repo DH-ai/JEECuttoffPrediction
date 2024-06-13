@@ -16,7 +16,7 @@ url =   "https://josaa.admissions.nic.in/applicant/seatmatrix/openingclosingrank
 
 fieldnames = ["Institute","Academic Program Name","Quota","Seat Type","Gender","Opening Rank","Closing Rank","year","rounds"]
             
-fileName = "jossaDataset2.csv"
+fileName = "jossaDataset.csv"
 with open(fileName,'w',newline='') as file:
     writer = csv.writer(file)
     writer.writerow(fieldnames)
