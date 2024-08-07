@@ -13,7 +13,7 @@ async function solve(appNum,day,month,year){
     'password': day + '-' + month + '-'+ year
   });
   
-  console.log(data)
+  // console.log(data)
 
 
   let config = {
@@ -40,18 +40,12 @@ async function solve(appNum,day,month,year){
     data: data
   };
 
-
+  const response = await axios.request(config)
+  // console.log(response)
+  const parsedData = parsehtml(JSON.stringify(response.data))
+  // console.log(parsedData)
+  return parsedData
   
-  await axios.request(config)
-  .then((response) => {
-      // console.log(response.data)
-      const parsedData = parsehtml(JSON.stringify(response.data))
-      return parsedData;
-      
-    })
-    .catch((error) => {
-      console.log("fuck");
-    });
 
 }
 function parsehtml(htmlcontent){
@@ -74,25 +68,25 @@ function parsehtml(htmlcontent){
 
 
 async function main(RollNo){
-  for (let year=2006; year>=2004;year--){
-    for(let month=9;month<=12;month++){
-      for (let day=24;day<=31;day++){
+  for (let year=2007; year>=2004;year--){
+    for(let month=1;month<=12;month++){
+      const dataPromise =[]
+      console.log(`Processing the data for ${RollNo} for ${year}-${month}`)
+      for (let day=1;day<=31;day++){
         date = {year:year.toString(),month:month>9?month.toString():'0'+month.toString(),day:(day>9 ? '':'0')+day.toString()}
-        console.log(`Processing the data for ${RollNo} for ${date.year}-${date.month}-${date.day}`)
-        // console.log(date)
         
-        const data = await solve(RollNo,date.day,date.month,date.year);
-        console.log(data.allIndiaRank)
-        break;
+        const Promisedata = solve(RollNo,date.day,date.month,date.year);
+        dataPromise.push(Promisedata)  
+      }
+      const resolvedData = await Promise.all(dataPromise);
+      resolvedData.forEach(data=>{
         if (data){
-          console.log(data);
+          console.log(data)
           process.exit(1)
         }
-        
-      }
-      break;
+      })
     }
-    break
+  
   }
 }
 
